@@ -1,7 +1,6 @@
-# network/serializers.py
-
 from rest_framework import serializers
-from .models import NetworkNode, Contact, Product
+
+from .models import Contact, NetworkNode, Product
 
 
 class ContactSerializer(serializers.ModelSerializer):
@@ -30,7 +29,6 @@ class NetworkNodeSerializer(serializers.ModelSerializer):
         model = NetworkNode
         fields = "__all__"
         read_only_fields = ("debt", "created_at")
-
 
     def create(self, validated_data):
         contact_data = validated_data.pop("contact")

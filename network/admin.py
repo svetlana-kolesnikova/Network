@@ -1,10 +1,9 @@
-# network/admin.py
-
 from django.contrib import admin
 from django.db.models import QuerySet
 from django.urls import reverse
 from django.utils.html import format_html
-from .models import NetworkNode, Contact, Product
+
+from .models import Contact, NetworkNode, Product
 
 
 @admin.action(description="Очистить задолженность перед поставщиком")

@@ -1,9 +1,7 @@
-# network/models.py
-
 from __future__ import annotations
 
-
 from decimal import Decimal
+
 from django.core.exceptions import ValidationError
 from django.db import models
 
@@ -39,7 +37,6 @@ class NetworkNode(models.Model):
     contact: models.OneToOneField = models.OneToOneField(Contact, on_delete=models.CASCADE)
     products: models.ManyToManyField = models.ManyToManyField(Product, related_name="nodes")
 
-
     supplier: models.ForeignKey = models.ForeignKey(
         "self",
         null=True,
@@ -48,16 +45,13 @@ class NetworkNode(models.Model):
         related_name="clients",
     )
 
-
     debt: models.DecimalField = models.DecimalField(
         max_digits=12,
         decimal_places=2,
         default=Decimal("0.00"),
     )
 
-
     created_at: models.DateTimeField = models.DateTimeField(auto_now_add=True)
-
 
     def clean(self) -> None:
         """Валидация отсутствия циклов в иерархии."""
@@ -66,7 +60,6 @@ class NetworkNode(models.Model):
             if node == self:
                 raise ValidationError("Циклическая зависимость поставщиков запрещена.")
             node = node.supplier
-
 
     @property
     def level(self) -> int:
@@ -77,7 +70,6 @@ class NetworkNode(models.Model):
             level += 1
             node = node.supplier
         return level
-
 
     def __str__(self) -> str:
         return self.name
